@@ -17,8 +17,8 @@
         android:title="@string/areas_page" />
 
     <item
-        android:id="@+id/fragment_advanced_search_page"
-        android:icon="@drawable/baseline_manage_search_24"
+        android:id="@+id/fragment_search_page"
+        android:icon="@drawable/baseline_search_24"
         android:title="@string/advanced_search_page" />
 
     <item

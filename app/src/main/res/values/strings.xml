@@ -9,5 +9,5 @@
     <string name="favorites_page">Favorites</string>
     <string name="categories_page">Categories</string>
     <string name="areas_page">Areas</string>
-    <string name="advanced_search_page">Advanced search</string>
+    <string name="advanced_search_page">Search</string>
 </resources>
