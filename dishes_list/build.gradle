@@ -44,6 +44,11 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
+    // Navigation
+    implementation("androidx.navigation:navigation-fragment-ktx:$version_navigation")
+    implementation("androidx.navigation:navigation-ui-ktx:$version_navigation")
+
+    // Modules dependencies
     implementation project(path: ':navigation')
 
     testImplementation 'junit:junit:4.13.2'

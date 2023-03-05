@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
+    android:id="@+id/nav_content"
     app:startDestination="@id/content">
 
     <fragment
@@ -10,5 +10,4 @@
         android:name="com.example.themealcollection.fragments.ContentFragment"
         android:label="fragment_content"
         tools:layout="@layout/fragment_content"/>
-
 </navigation>

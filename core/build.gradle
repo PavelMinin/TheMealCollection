@@ -15,7 +15,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
-
+    buildFeatures {
+        viewBinding = true
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -54,6 +56,10 @@ dependencies {
     // Interceptor
     def interceptor_version = "4.10.0"
     implementation "com.squareup.okhttp3:logging-interceptor:$interceptor_version"
+
+    // Navigation
+    implementation("androidx.navigation:navigation-fragment-ktx:$version_navigation")
+    implementation("androidx.navigation:navigation-ui-ktx:$version_navigation")
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

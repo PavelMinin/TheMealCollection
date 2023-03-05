@@ -44,17 +44,21 @@ dependencies {
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation project(path: ':navigation')
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     // Navigation
-    def nav_version = "2.5.3"
     implementation("androidx.navigation:navigation-fragment-ktx:$version_navigation")
     implementation("androidx.navigation:navigation-ui-ktx:$version_navigation")
 
-    // Core module
+    // Modules dependencies
     implementation project(':core')
+    implementation project(':dishes_list')
+    implementation project(':dish_details')
+    implementation project(':dishes_favorites')
+    implementation project(':navigation')
 
     // Dagger2
     def dagger_version = "2.45"
