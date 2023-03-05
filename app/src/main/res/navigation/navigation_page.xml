@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/fragment_overview_page"
-        android:name="com.example.themealcollection.fragments.overview.OverviewFragment"
-        tools:layout="@layout/fragment_overview"/>
+        android:name="com.example.dishes_list.overview.OverviewFragment"
+        tools:layout=""/>
 
     <fragment
         android:id="@+id/fragment_categories_page"

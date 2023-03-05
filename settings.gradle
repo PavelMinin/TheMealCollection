@@ -14,4 +14,8 @@ dependencyResolutionManagement {
 }
 rootProject.name = "The Meal Collection"
 include ':app'
-include ':repository'
+include ':core'
+include ':dishes_list'
+include ':dish_details'
+include ':dishes_favorites'
+include ':navigation'
