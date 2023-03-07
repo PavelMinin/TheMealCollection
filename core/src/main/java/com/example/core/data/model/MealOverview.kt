@@ -6,11 +6,11 @@ data class MealOverview(
     @SerializedName("idMeal")
     val id: String,
     @SerializedName("strMeal")
-    val name: String,
+    val name: String?,
     @SerializedName("strArea")
-    val area: String,
+    val area: String?,
     @SerializedName("strCategory")
-    val category: String,
+    val category: String?,
     @SerializedName("strMealThumb")
-    val imageUrl: String
+    val imageUrl: String?
 )

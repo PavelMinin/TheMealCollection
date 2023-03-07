@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">The Meal Collection</string>
+    <string name="dish_serving_example_description">Dish serving example.</string>
+    <string name="category_description">Category:</string>
+    <string name="area_description">Area:</string>
+    <string name="list_of_my_favorite_meals_description">List of my favorite meals</string>
+    <string name="overview_page">Overview</string>
+    <string name="favorites_page">Favorites</string>
+    <string name="categories_page">Categories</string>
+    <string name="areas_page">Areas</string>
+    <string name="advanced_search_page">Search</string>
+</resources>

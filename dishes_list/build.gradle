@@ -44,12 +44,18 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
+    // Coil
+    def coil_version = "2.2.2"
+    implementation "io.coil-kt:coil:$coil_version"
+
     // Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:$version_navigation")
     implementation("androidx.navigation:navigation-ui-ktx:$version_navigation")
 
     // Modules dependencies
     implementation project(path: ':navigation')
+    implementation project(path: ':dish_details')
+    implementation project(path: ':core')
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

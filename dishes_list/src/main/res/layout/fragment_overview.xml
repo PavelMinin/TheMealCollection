@@ -28,7 +28,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         android:clipToPadding="false"
         android:padding="20dp"
         tools:itemCount="20"
-        tools:listitem="@layout/item_meal" />
+        tools:listitem="@layout/item_view" />
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

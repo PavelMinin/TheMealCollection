@@ -24,6 +24,6 @@
         android:clipToPadding="false"
         android:padding="20dp"
         tools:itemCount="20"
-        tools:listitem="@layout/item_meal" />
+        tools:listitem="@layout/item_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

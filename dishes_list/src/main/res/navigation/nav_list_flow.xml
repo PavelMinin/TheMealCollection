@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/graph_list_flow"
+    android:id="@+id/nav_list_flow"
     app:startDestination="@id/fragment_overview_page"
     tools:ignore="UnusedNavigation">
 
@@ -12,16 +12,16 @@
         android:name="com.example.dishes_list.overview.OverviewFragment"
         tools:layout="@layout/fragment_overview">
 
-<!--        <action-->
-<!--            android:id="@+id/actionUserFromListToDetails"-->
-<!--            app:destination="@id/nav_user_details" >-->
-<!--            <argument-->
-<!--                android:name="user"-->
-<!--                app:argType="com.metapoger.core.model.User"-->
-<!--                app:nullable="false" />-->
-<!--        </action>-->
+        <action
+            android:id="@+id/actionMealFromListToDetails"
+            app:destination="@id/nav_meal_details" >
+            <argument
+                android:name="meal"
+                app:argType="com.metapoger.core.model.User"
+                app:nullable="false" />
+        </action>
     </fragment>
 
-<!--    <include app:graph="@navigation/nav_user_details" />-->
+    <include app:graph="@navigation/nav_meal_details" />
 
 </navigation>

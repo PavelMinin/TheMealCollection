@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.example.dishes_list'
+    namespace 'com.example.categories'
     compileSdk 33
 
     defaultConfig {
@@ -15,17 +15,16 @@ android {
         consumerProguardFiles "consumer-rules.pro"
     }
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-    buildFeatures {
-        viewBinding = true
-    }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -40,13 +39,14 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-    implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
-// Navigation
+    // Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:$version_navigation")
     implementation("androidx.navigation:navigation-ui-ktx:$version_navigation")
+
+    // Modules dependencies
+    implementation project(path: ':navigation')
+    implementation project(path: ':core')
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
