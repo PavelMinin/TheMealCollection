@@ -3,6 +3,8 @@ package com.example.dishes_list.overview
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import coil.size.Scale
+import coil.size.ViewSizeResolver
 import com.example.core.data.model.MealOverview
 import com.example.dish_details.databinding.ItemViewBinding
 
@@ -22,7 +24,8 @@ class MealAdapter(
     }
 
     class MealOverviewViewHolder(
-        private val binding: ItemViewBinding
+        private val binding: ItemViewBinding,
+        private val onItemClick: (MealOverview) -> Unit
         ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: MealOverview) {
@@ -31,10 +34,10 @@ class MealAdapter(
                     scale(Scale.FIT)
                     size(ViewSizeResolver(root))
                 }
-                textName.text = character.name
+                textName.text = item.name
 
                 root.setOnClickListener {
-                    onCharacterClicked(character)
+                    onItemClick(item)
                 }
             }
         }
