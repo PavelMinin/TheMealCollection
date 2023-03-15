@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="list_of_meals_description">List of meals.</string>
+    <string name="list_of_favorite_meals_description">List of favirite meals</string>
+</resources>

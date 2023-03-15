@@ -1,26 +1,31 @@
 package com.example.dishes_list.overview
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.size.Scale
 import coil.size.ViewSizeResolver
 import com.example.core.data.model.MealOverview
-import com.example.dish_details.databinding.ItemViewBinding
+import com.example.dishes_list.databinding.ItemViewBinding
 
 class MealAdapter(
-    private val data: ArrayList<MealOverview>,
+    private val data: List<MealOverview>,
     private val onItemClick: (MealOverview) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        TODO("Not yet implemented")
+        val layoutInflater = LayoutInflater.from(parent.context)
+        return MealOverviewViewHolder(
+            binding = ItemViewBinding.inflate(layoutInflater, parent, false),
+            onItemClick = onItemClick
+        )
     }
 
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        (holder as MealOverviewViewHolder).bind(data[position])
     }
 
     class MealOverviewViewHolder(
@@ -35,6 +40,8 @@ class MealAdapter(
                     size(ViewSizeResolver(root))
                 }
                 textName.text = item.name
+                textAreaValue.text = item.area
+                textCategoryValue.text = item.category
 
                 root.setOnClickListener {
                     onItemClick(item)

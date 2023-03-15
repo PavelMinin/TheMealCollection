@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_favorites">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_favorites"
+    app:startDestination="@id/favorites_fragment_page">
+
+    <fragment
+        android:id="@+id/favorites_fragment_page"
+        android:label="FragmentFavorites"
+        android:name="com.example.dishes_favorites.FavoritesFragment"
+        tools:layout="@layout/fragment_favorites">
+        <action
+            android:id="@+id/action_fragment_favorites_page_to_nav_user_details"
+            app:destination="@id/nav_meal_details">
+            <argument
+                android:name="meal"
+                app:argType="com.example.core.data.model.MealOverview"
+                app:nullable="false"/>
+        </action>
+    </fragment>
+
+    <include app:graph="@navigation/nav_meal_details" />
 
 </navigation>

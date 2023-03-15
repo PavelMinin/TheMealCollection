@@ -2,7 +2,7 @@ package com.example.themealcollection.fragments
 
 import android.os.Bundle
 import android.view.View
-import com.example.core.viewBinding
+import com.example.core.utils.viewBinding
 import com.example.navigation.TabNavigationFragment
 import com.example.themealcollection.R
 import com.example.themealcollection.databinding.FragmentContentBinding
@@ -23,12 +23,18 @@ class ContentFragment : TabNavigationFragment(R.layout.fragment_content) {
             Tab(getString(R.string.advanced_search_page),
                 com.example.dishes_list.R.navigation.nav_list_flow),
             Tab(getString(R.string.favorites_page),
-                com.example.dishes_list.R.navigation.nav_list_flow)
+                com.example.dishes_favorites.R.navigation.nav_favorites)
         )
     }
     private lateinit var selectedTab: Tab
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if(!needShowBottomBar) {
+            binding.bottomNavBar.setWillNotDraw(true)
+            binding.bottomNavBar.invalidate()
+        }
+
 
         selectedTab = tabs[0]
         selectTab(tabs[0])

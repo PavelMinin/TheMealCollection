@@ -1,32 +1,37 @@
 package com.example.dishes_favorites
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.example.themealcollection.databinding.FragmentFavoritesBinding
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.core.data.model.mealList
+import com.example.core.utils.Utils.RECYCLER_ITEM_SPACE
+import com.example.core.utils.Utils.addHorizontalSpaceDecoration
+import com.example.core.utils.viewBinding
+import com.example.dishes_favorites.databinding.FragmentFavoritesBinding
+import com.example.navigation.BaseFragment
 
-class FavoritesFragment : Fragment() {
+class FavoritesFragment : BaseFragment(R.layout.fragment_favorites) {
 
-    private var _binding: FragmentFavoritesBinding? = null
-    private val binding get() = requireNotNull(_binding) {
-        "View was destroyed!"
+    private val binding by viewBinding(FragmentFavoritesBinding::bind)
+
+    private val adapter = MealAdapter(mealList) { meal ->
+        findNavController().navigate(
+            FavoritesFragmentDirections.actionFragmentFavoritesPageToNavUserDetails(meal)
+        )
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return FragmentFavoritesBinding.inflate(inflater, container, false)
-            .also { binding ->
-                _binding = binding }
-            .root
-    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        val linearLayoutManager = LinearLayoutManager(
+            view.context, LinearLayoutManager.VERTICAL, false
+        )
+
+        with(binding) {
+            recyclerView.adapter = adapter
+            recyclerView.layoutManager = linearLayoutManager
+            recyclerView.addHorizontalSpaceDecoration(RECYCLER_ITEM_SPACE)
+        }
     }
 }

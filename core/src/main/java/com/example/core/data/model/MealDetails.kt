@@ -1,8 +1,13 @@
 package com.example.core.data.model
 
 import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
-data class Meal(
+data class MealDetailsWrapper(
+    val meals: List<MealDetails>
+)
+@Serializable
+data class MealDetails(
     @SerializedName("idMeal")
     val id: String,
     val dateModified: String?,

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id("androidx.navigation.safeargs")
 }
 
 android {
@@ -36,9 +37,12 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation "androidx.core:core-ktx:$version_core"
+    implementation "androidx.appcompat:appcompat:$version_appcompat"
+    implementation "com.google.android.material:material:$version_material"
+
+    // Coil
+    implementation "io.coil-kt:coil:$version_coil"
 
     // Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:$version_navigation")
@@ -47,6 +51,7 @@ dependencies {
     // Modules dependencies
     implementation project(path: ':navigation')
     implementation project(path: ':core')
+    implementation project(path: ':dish_details')
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

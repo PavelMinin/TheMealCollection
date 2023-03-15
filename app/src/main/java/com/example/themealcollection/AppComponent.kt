@@ -1,30 +1,25 @@
 package com.example.themealcollection
 
-import android.app.Application
+import android.content.Context
+import com.example.core.db.di.DaosModule
+import com.example.core.db.di.DatabaseModule
+import com.example.core.network.di.NetworkModule
 import dagger.BindsInstance
 import dagger.Component
-import javax.inject.Qualifier
-import javax.inject.Scope
 
-//@Component(modules = [AppModule::class])
-//interface AppComponent : ArticlesDeps {
-//    override val networkService: NetworkService
-//
-//    @Component.Builder
-//    interface Builder {
-//
-//        @BindsInstance
-//        fun application(application: Application): Builder
-//
-//        @BindsInstance
-//        fun apiKey(@NetworkApiQualifier apiKey: String): Builder
-//
-//        fun build(): AppComponent
-//    }
-//}
-//
-//@Qualifier
-//annotation class NetworkApiQualifier
-//
-//@Scope
-//annotation class AppScope
+@Component(modules = [
+    NetworkModule::class,
+    DaosModule::class,
+    DatabaseModule::class
+])
+interface AppComponent {
+
+    @Component.Builder
+    interface Builder {
+
+        @BindsInstance
+        fun context(context: Context): Builder
+
+        fun build(): AppComponent
+    }
+}

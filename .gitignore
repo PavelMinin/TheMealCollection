@@ -13,4 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
-/core/src/main/java/com/example/core/data/repository/retrofit/LocalValues.kt
+/core/src/main/java/com/example/core/network/repository/retrofit/LocalValues.kt
+
