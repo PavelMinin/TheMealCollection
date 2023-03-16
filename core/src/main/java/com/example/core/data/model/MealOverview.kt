@@ -3,6 +3,7 @@ package com.example.core.data.model
 import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
 
+@Serializable
 data class MealWrapper(
     val meals: List<MealOverview>
 )
@@ -18,4 +19,4 @@ data class MealOverview(
     val category: String?,
     @SerializedName("strMealThumb")
     val imageUrl: String?
-)
+): java.io.Serializable

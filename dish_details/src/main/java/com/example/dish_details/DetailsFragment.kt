@@ -7,8 +7,6 @@ import androidx.navigation.fragment.navArgs
 import coil.load
 import coil.size.Scale
 import coil.size.ViewSizeResolver
-import com.example.core.data.model.mealList
-import com.example.core.data.model.MealOverview
 import com.example.core.utils.viewBinding
 import com.example.dish_details.databinding.FragmentDetailsBinding
 import com.example.navigation.BaseFragment
@@ -27,9 +25,7 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mealDetails = mealList.find {
-            it.id == args.meal.id
-        }
+        val mealDetails = args.meal
 
 
         with(binding) {

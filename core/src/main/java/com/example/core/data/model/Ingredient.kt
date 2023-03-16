@@ -3,8 +3,9 @@ package com.example.core.data.model
 import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
 
+@Serializable
 data class IngredientsWrapper(
-    val meals: List<Ingredient>
+    val ingredients: List<Ingredient>
 )
 
 @Serializable

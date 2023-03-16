@@ -16,10 +16,6 @@ class ContentFragment : TabNavigationFragment(R.layout.fragment_content) {
         listOf(
             Tab(getString(R.string.overview_page),
                 com.example.dishes_list.R.navigation.nav_list_flow),
-            Tab(getString(R.string.categories_page),
-                com.example.dishes_list.R.navigation.nav_list_flow),
-            Tab(getString(R.string.areas_page),
-                com.example.dishes_list.R.navigation.nav_list_flow),
             Tab(getString(R.string.advanced_search_page),
                 com.example.dishes_list.R.navigation.nav_list_flow),
             Tab(getString(R.string.favorites_page),
@@ -45,20 +41,20 @@ class ContentFragment : TabNavigationFragment(R.layout.fragment_content) {
                     if (selectedTab.name != tabs[0].name) selectTab(tabs[0])
                     true
                 }
-                R.id.fragment_categories_page -> {
+//                R.id.fragment_categories_page -> {
+//                    if (selectedTab.name != tabs[1].name) selectTab(tabs[1])
+//                    true
+//                }
+//                R.id.fragment_areas_page -> {
+//                    if (selectedTab.name != tabs[2].name) selectTab(tabs[2])
+//                    true
+//                }
+                R.id.fragment_search_page -> {
                     if (selectedTab.name != tabs[1].name) selectTab(tabs[1])
                     true
                 }
-                R.id.fragment_areas_page -> {
-                    if (selectedTab.name != tabs[2].name) selectTab(tabs[2])
-                    true
-                }
-                R.id.fragment_search_page -> {
-                    if (selectedTab.name != tabs[3].name) selectTab(tabs[3])
-                    true
-                }
                 R.id.fragment_favorites_page -> {
-                    if (selectedTab.name != tabs[4].name) selectTab(tabs[4])
+                    if (selectedTab.name != tabs[2].name) selectTab(tabs[2])
                     true
                 }
                 else -> {
