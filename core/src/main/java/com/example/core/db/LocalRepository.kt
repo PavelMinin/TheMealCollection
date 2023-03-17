@@ -3,12 +3,17 @@ package com.example.core.data
 import android.content.Context
 import com.example.core.db.MealDatabase
 import com.example.core.db.model.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 interface LocalRepository {
 
     suspend fun getMealList(): Result<List<MealOverviewEntity>>
 
-    suspend fun getMealFavorites(): Result<MealFavoritesEntity>
+    suspend fun getMealDetails(id: String): Result<MealFavoritesEntity>
+
+    suspend fun getMealFavorites(): Result<List<MealFavoritesEntity>>
 
     suspend fun getAreas(): Result<List<AreaEntity>>
 
@@ -16,9 +21,9 @@ interface LocalRepository {
 
     suspend fun getIngredients(): Result<List<IngredientEntity>>
 
-    suspend fun putMealList(): Result<List<MealOverviewEntity>>
+    suspend fun putMealList(meals: List<MealOverviewEntity>)
 
-    suspend fun putMealFavorites(): Result<MealFavoritesEntity>
+    suspend fun putMealFavorites(mealDetails: MealFavoritesEntity)
 
     suspend fun putAreas(): Result<List<AreaEntity>>
 
@@ -27,16 +32,26 @@ interface LocalRepository {
     suspend fun putIngredients(): Result<List<IngredientEntity>>
 }
 
-class LocalRepositoryImpl(context: Context) : LocalRepository {
+class LocalRepositoryImpl @Inject constructor(context: Context) : LocalRepository {
 
     private val appDatabase = MealDatabase(context)
 
-    override suspend fun getMealList(): Result<List<MealOverviewEntity>> {
-        TODO("Not yet implemented")
+    override suspend fun getMealList() = withContext(Dispatchers.IO) {
+        Result {
+            appDatabase.mealOverviewDao().getAll()
+        }
     }
 
-    override suspend fun getMealFavorites(): Result<MealFavoritesEntity> {
-        TODO("Not yet implemented")
+    override suspend fun getMealDetails(id: String) = withContext(Dispatchers.IO) {
+        Result {
+            appDatabase.mealFavoritesDao().get(id)
+        }
+    }
+
+    override suspend fun getMealFavorites() = withContext(Dispatchers.IO) {
+        Result {
+            appDatabase.mealFavoritesDao().getAll()
+        }
     }
 
     override suspend fun getAreas(): Result<List<AreaEntity>> {
@@ -51,11 +66,13 @@ class LocalRepositoryImpl(context: Context) : LocalRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun putMealList(): Result<List<MealOverviewEntity>> {
-        TODO("Not yet implemented")
+    override suspend fun putMealList(meals: List<MealOverviewEntity>) = withContext(Dispatchers.IO) {
+            //val internalData = meals.map { it.asInternalModel() }
+            appDatabase.mealOverviewDao().insert(meals)
+
     }
 
-    override suspend fun putMealFavorites(): Result<MealFavoritesEntity> {
+    override suspend fun putMealFavorites(mealDetails: MealFavoritesEntity) {
         TODO("Not yet implemented")
     }
 

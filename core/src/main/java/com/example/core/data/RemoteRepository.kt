@@ -4,6 +4,7 @@ import com.example.core.data.model.*
 import com.example.core.network.retrofit.ApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 interface RemoteRepository {
 
@@ -18,7 +19,7 @@ interface RemoteRepository {
     suspend fun getIngredients(): Result<List<Ingredient>>
 }
 
-class RemoteRepositoryImpl(private val apiKey: String) : RemoteRepository {
+class RemoteRepositoryImpl @Inject constructor(apiKey: String) : RemoteRepository {
 
     private val apiService = ApiService(apiKey)
     override suspend fun getRandomMealList() = withContext(Dispatchers.IO) {

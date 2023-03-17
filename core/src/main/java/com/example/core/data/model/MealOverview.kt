@@ -1,5 +1,6 @@
 package com.example.core.data.model
 
+import com.example.core.db.model.MealOverviewEntity
 import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
 
@@ -20,3 +21,11 @@ data class MealOverview(
     @SerializedName("strMealThumb")
     val imageUrl: String?
 ): java.io.Serializable
+
+fun MealOverview.asInternalModel() = MealOverviewEntity(
+    id = id,
+    name = name,
+    area = area,
+    category = category,
+    imageUrl = imageUrl
+)

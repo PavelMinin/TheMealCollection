@@ -8,11 +8,9 @@ import dagger.Component
 import javax.inject.Scope
 import kotlin.properties.Delegates.notNull
 
-@Scope
-internal annotation class Feature
 
-@[Feature Component(dependencies = [OverviewDeps::class])]
-internal interface OverviewComponent {
+@[OverviewScope Component(dependencies = [OverviewDeps::class])]
+interface OverviewComponent {
 
     fun inject(fragment: OverviewFragment)
 
@@ -27,8 +25,8 @@ internal interface OverviewComponent {
 
 interface OverviewDeps {
 
-    val remoteRepository: RemoteRepository
-    val localRepository: LocalRepository
+    var remoteRepository: RemoteRepository
+    var localRepository: LocalRepository
 }
 
 interface OverviewDepsProvider {
@@ -41,12 +39,15 @@ interface OverviewDepsProvider {
 
 object OverviewDepsStore : OverviewDepsProvider {
 
-    override var deps: OverviewDeps by notNull()
+        override var deps: OverviewDeps by notNull()
 }
 
-internal class OverviewComponentViewModel : ViewModel() {
+class OverviewComponentViewModel : ViewModel() {
 
     val newOverviewComponent = DaggerOverviewComponent.builder()
             .deps(OverviewDepsProvider.deps)
             .build()
 }
+
+@Scope
+annotation class OverviewScope

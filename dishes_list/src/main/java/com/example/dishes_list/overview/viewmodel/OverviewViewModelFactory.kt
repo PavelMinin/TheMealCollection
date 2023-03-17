@@ -1,4 +1,4 @@
-package com.example.dishes_list.overview
+package com.example.dishes_list.overview.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

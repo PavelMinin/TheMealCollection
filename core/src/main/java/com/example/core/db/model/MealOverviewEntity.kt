@@ -9,7 +9,7 @@ import com.example.core.data.model.MealOverview
 data class MealOverviewEntity (
     @PrimaryKey
     val id: String,
-    val name: String,
+    val name: String?,
     val area: String?,
     val category: String?,
     @ColumnInfo(name = "image_url")

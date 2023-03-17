@@ -1,4 +1,4 @@
-package com.example.dishes_list.overview
+package com.example.dishes_list.overview.viewmodel
 
 import com.example.core.data.model.MealOverview
 

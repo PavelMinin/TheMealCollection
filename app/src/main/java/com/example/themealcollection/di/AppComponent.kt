@@ -6,19 +6,20 @@ import com.example.core.data.LocalRepository
 import com.example.core.data.LocalRepositoryImpl
 import com.example.core.data.RemoteRepository
 import com.example.core.data.RemoteRepositoryImpl
+import com.example.dish_details.di.DetailsDeps
 import com.example.dishes_list.overview.di.OverviewDeps
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
 import dagger.Provides
 import javax.inject.Qualifier
-import javax.inject.Scope
+import javax.inject.Singleton
 
-@[AppScope Component(modules = [AppModule::class])]
-interface AppComponent : OverviewDeps {
+@[Singleton Component(modules = [AppModule::class])] // AppScope
+interface AppComponent : OverviewDeps, DetailsDeps {
 
-    override val remoteRepository: RemoteRepository
-    override val localRepository: LocalRepository
+    override var remoteRepository: RemoteRepository
+    override var localRepository: LocalRepository
 
     @Component.Builder
     interface Builder {
@@ -39,12 +40,12 @@ interface AppComponent : OverviewDeps {
 @Module
 class AppModule {
 
-    @[Provides AppScope]
+    @[Provides Singleton]//AppScope]
     fun provideRemoteRepository(@ApiQualifier apiKey: String) : RemoteRepository {
         return RemoteRepositoryImpl(apiKey)
     }
 
-    @[Provides AppScope]
+    @[Provides Singleton]//AppScope]
     fun provideLocalRepository(context: Context) : LocalRepository {
         return LocalRepositoryImpl(context)
     }
@@ -53,5 +54,5 @@ class AppModule {
 @Qualifier
 annotation class ApiQualifier
 
-@Scope
-annotation class AppScope
+//@Scope
+//annotation class AppScope

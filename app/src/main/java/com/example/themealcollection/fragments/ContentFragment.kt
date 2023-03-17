@@ -23,6 +23,7 @@ class ContentFragment : TabNavigationFragment(R.layout.fragment_content) {
         )
     }
     private lateinit var selectedTab: Tab
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

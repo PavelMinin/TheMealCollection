@@ -9,4 +9,6 @@
     <string name="categories_page">Categories</string>
     <string name="areas_page">Areas</string>
     <string name="advanced_search_page">Search</string>
+    <string name="network_unavailable_error_message">No internet connection! Please try again.</string>
+    <string name="generic_error_message">Something went wrong… Please try again.</string>
 </resources>

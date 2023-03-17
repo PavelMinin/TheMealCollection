@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.data.NetworkUnavailable
 import com.example.core.utils.Utils
 import com.example.core.utils.Utils.addHorizontalSpaceDecoration
@@ -18,6 +19,10 @@ import com.example.dishes_list.R
 import com.example.dishes_list.databinding.FragmentOverviewBinding
 import com.example.dishes_list.overview.adapter.MealAdapter
 import com.example.dishes_list.overview.di.OverviewComponentViewModel
+import com.example.dishes_list.overview.viewmodel.OverviewFragmentViewEffects
+import com.example.dishes_list.overview.viewmodel.OverviewFragmentViewState
+import com.example.dishes_list.overview.viewmodel.OverviewViewModel
+import com.example.dishes_list.overview.viewmodel.OverviewViewModelFactory
 import com.example.navigation.BaseFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.Lazy
@@ -34,11 +39,10 @@ class OverviewFragment : BaseFragment(R.layout.fragment_overview) {
         overviewViewModelFactory.get()
     }
 
-
     override fun onAttach(context: Context) {
-        super.onAttach(context)
         ViewModelProvider(this).get<OverviewComponentViewModel>()
             .newOverviewComponent.inject(this)
+        super.onAttach(context)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,24 +50,31 @@ class OverviewFragment : BaseFragment(R.layout.fragment_overview) {
 
         setupUI()
         requestMealList()
+
+        binding.layoutSwipeRefresh.setOnRefreshListener {
+            viewModel.updateMealList()
+        }
     }
 
     private fun setupUI() {
         val adapter = createAdapter()
         setupRecyclerView(adapter)
         observeViewStateUpdates(adapter)
+        subscribeToViewEffects()
     }
 
     private fun createAdapter(): MealAdapter {
         return MealAdapter { meal ->
             findNavController().navigate(
-            OverviewFragmentDirections.actionFragmentOverviewPageToNavUserDetails(meal)
-        )
-            findNavController() }
+            OverviewFragmentDirections
+                .actionFragmentOverviewPageToNavUserDetails(meal)
+        ) }
     }
 
     private fun setupRecyclerView(adapter: MealAdapter) {
         binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(
+                context, LinearLayoutManager.VERTICAL, false)
             setAdapter(adapter)
             this.addHorizontalSpaceDecoration(Utils.RECYCLER_ITEM_SPACE)
         }
@@ -78,6 +89,7 @@ class OverviewFragment : BaseFragment(R.layout.fragment_overview) {
     private fun updateUi(viewState: OverviewFragmentViewState, adapter: MealAdapter) {
         adapter.submitList(viewState.meals)
         binding.loadingProgressBar.isVisible = viewState.loading
+        binding.layoutSwipeRefresh.isRefreshing = viewState.loading
     }
     private fun subscribeToViewEffects() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
@@ -98,6 +110,11 @@ class OverviewFragment : BaseFragment(R.layout.fragment_overview) {
         }
 
         showSnackbar(message)
+        showLocalData()
+    }
+
+    private fun showLocalData() {
+        viewModel.setLocalData()
     }
 
 
@@ -107,10 +124,6 @@ class OverviewFragment : BaseFragment(R.layout.fragment_overview) {
 
     private fun requestMealList() {
         viewModel.requestMealList()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
     }
 }
 

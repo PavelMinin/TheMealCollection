@@ -15,5 +15,5 @@ interface MealOverviewDao {
     @Delete
     fun delete(property: MealOverviewEntity)
     @Query("SELECT * FROM meal_overview_property")
-    fun getAll(): Flow<List<MealOverviewEntity>>
+    fun getAll(): List<MealOverviewEntity>
 }
