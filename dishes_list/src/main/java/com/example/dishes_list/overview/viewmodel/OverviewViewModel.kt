@@ -54,11 +54,16 @@ class OverviewViewModel(
     }
 
     fun setLocalData() {
-        viewModelScope.launch {
-            when (val result = localRepository.getMealList()) {
-                is Result.Success -> handleOverview(result.value.map { it.asExternalModel() })
-                is Result.Failure -> handleFailure(result.cause)
+        try {
+            viewModelScope.launch {
+                when (val result = localRepository.getMealList()) {
+                    is Result.Success -> handleOverview(result.value.map { it.asExternalModel() })
+                    is Result.Failure -> handleFailure(result.cause)
+                }
             }
+        } catch (e: Throwable) {
+            viewModelScope.launch { handleFailure(e) }
         }
+
     }
 }

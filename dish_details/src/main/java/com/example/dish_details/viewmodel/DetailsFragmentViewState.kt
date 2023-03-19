@@ -4,5 +4,6 @@ import com.example.core.data.model.MealDetails
 
 data class DetailsFragmentViewState(
     val loading: Boolean = true,
-    val mealDetails: MealDetails? = null
+    val mealDetails: MealDetails? = null,
+    val isFavorites: Boolean = false
 )

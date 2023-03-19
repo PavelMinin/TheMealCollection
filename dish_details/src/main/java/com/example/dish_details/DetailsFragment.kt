@@ -3,13 +3,13 @@ package com.example.dish_details
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import coil.load
 import com.example.core.data.NetworkUnavailable
 import com.example.core.data.model.MealDetails
 import com.example.core.utils.viewBinding
@@ -52,6 +52,13 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
 
         setupUI()
         requestMealDetails(args.meal.id)
+        setOnFavoritesClickListener()
+    }
+
+    private fun setOnFavoritesClickListener() {
+        binding.favoritesIcon.setOnClickListener {
+            viewModel.pressOnFavoritesButton()
+        }
     }
 
     private fun requestMealDetails(id: String) {
@@ -80,7 +87,7 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
     }
 
     private fun handleFailure(cause: Throwable) {
-        binding.loadingProgressBar.isInvisible = true
+        binding.loadingProgressBar.isVisible = false
 
         val message = when (cause) {
             is NetworkUnavailable -> getString(R.string.network_unavailable_error_message)
@@ -101,33 +108,36 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
     }
 
     private fun updateUi(viewState: DetailsFragmentViewState) {
-        showDetails(viewState.mealDetails)
+        viewState.mealDetails?.let { showDetails(it) }
         binding.loadingProgressBar.isVisible = viewState.loading
+        if(viewState.isFavorites) {
+            binding.favoritesIcon.setImageResource(R.drawable.baseline_favorite_24)
+        } else {
+            binding.favoritesIcon.setImageResource(R.drawable.baseline_favorite_border_24)
+        }
     }
 
-    private fun showDetails(mealDetails: MealDetails?) {
+    private fun showDetails(mealDetails: MealDetails) {
         val details = requireNotNull(mealDetails) { "Details is null!" }
         with(binding) {
-            tvTitle.text = details.name
-            tvSubTitle.text = details.category
+            toolbarDetail.title = details.name
+            toolbarDetail.subtitle = details.category
+            image.load(details.imageUrl)
+            favoritesIcon.drawable
             val mapOfingredientsAndMeasures = makeIngredientAndMeasuresMap(mealDetails)
             var ingredients = ""
-            var measures = ""
             var firstLine = true
             mapOfingredientsAndMeasures.forEach {
                 if(it.key != null) {
                     if(firstLine) {
                         firstLine = false
-                        ingredients += it.key
-                        measures = measures + it.value ?: "N/A"
+                        ingredients += (it.key + ": ") + (it.value  ?: "\nN/A")
                     }
-                    ingredients += (it.key + "\n")
-                    measures = measures + "\n" + it.value  ?: "\nN/A"
+                    ingredients += "\n" + (it.key + ": ") + (it.value  ?: "\nN/A")
                 }
             }
-            tvIngredients.text = ingredients
-            tvMeasure.text = measures
-            tvInstructions.text = details.strInstructions
+            ingredientsField.text = ingredients
+            instructionsField.text = details.strInstructions
         }
     }
 

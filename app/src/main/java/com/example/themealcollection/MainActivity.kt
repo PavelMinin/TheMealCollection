@@ -13,9 +13,11 @@ class MainActivity : AppCompatActivity(), BottomBarHideable {
 
     override fun hide() {
         findViewById<View>(R.id.bottom_nav_bar).visibility = View.GONE
+        findViewById<View>(R.id.toolbar).visibility = View.GONE
     }
 
     override fun show() {
         findViewById<View>(R.id.bottom_nav_bar).visibility = View.VISIBLE
+        findViewById<View>(R.id.toolbar).visibility = View.VISIBLE
     }
 }

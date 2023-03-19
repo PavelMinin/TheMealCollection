@@ -1,5 +1,6 @@
 package com.example.dish_details.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.data.LocalRepository
@@ -25,39 +26,91 @@ class DetailsViewModel(
     fun requestMealDetails(id: String) {
         if (viewState.value.mealDetails != null) return
 
+        try {
+            viewModelScope.launch {
+                when (val result = localRepository.getMealDetails(id)) {
+                    is Result.Success -> handleFavoritesDetails(result.value.asExternalModel())
+                    is Result.Failure -> viewModelScope.launch { handleFailure(result.cause) }
+                }
+            }
+        } catch (e: Throwable) {
+            viewModelScope.launch { handleFailure(e) }
+        }
+
         viewModelScope.launch {
-            when (val result = remoteRepository.getMealDetails(id)) {
-                is Result.Success -> handleDetails(result.value)
-                is Result.Failure -> handleFailure(result.cause)
+            when (val resultRemote = remoteRepository.getMealDetails(id)) {
+                is Result.Success -> handleDetails(resultRemote.value)
+                is Result.Failure -> handleFailure(resultRemote.cause)
             }
         }
     }
 
     private fun handleDetails(mealDetails: MealDetails) {
-        _viewState.value = DetailsFragmentViewState(loading = false, mealDetails = mealDetails)
+        _viewState.value = DetailsFragmentViewState(
+            loading = false,
+            mealDetails = mealDetails,
+            isFavorites = false
+        )
+        Log.i(TAG_LOCAL_DATA, "Success: $mealDetails")
     }
 
-    private fun addToFavorites(mealDetails: MealDetails) {
-        viewModelScope.launch {
-            localRepository.putMealFavorites(mealDetails.asInternalModel())
+    private fun handleFavoritesDetails(mealDetails: MealDetails) {
+        _viewState.value = DetailsFragmentViewState(
+            loading = false,
+            mealDetails = mealDetails,
+            isFavorites = true
+        )
+        Log.i(TAG_LOCAL_DATA, "Success: $mealDetails")
+    }
+
+    fun pressOnFavoritesButton() {
+        if(viewState.value.isFavorites) deleteFromFavorites()
+        else addToFavorites()
+    }
+
+     private fun addToFavorites() {
+        try {
+            viewModelScope.launch {
+                val details = viewState.value.mealDetails
+                details?.asInternalModel()?.let { it -> localRepository.putMealFavorites(it) }
+                handleFavoritesDetails(requireNotNull(details))
+            }
+        } catch (e: Throwable) {
+            viewModelScope.launch { handleFailure(e) }
+        }
+    }
+
+    private fun deleteFromFavorites() {
+        try {
+            viewModelScope.launch {
+                val details = viewState.value.mealDetails
+                details?.asInternalModel()?.let {
+                        it -> localRepository.deleteMealFromFavorites(it)
+                }
+                handleDetails(requireNotNull(details))
+            }
+        } catch (e: Throwable) {
+            viewModelScope.launch { handleFailure(e) }
         }
     }
 
     private suspend fun handleFailure(cause: Throwable) {
         _viewEffects.emit(DetailsFragmentViewEffects.Failure(cause))
-    }
-
-    fun updateMealDetails(id: String) {
-        _viewState.value = DetailsFragmentViewState(loading = true, mealDetails = null)
-        requestMealDetails(id)
+        Log.i(TAG_LOCAL_DATA, "Failure: $cause")
     }
 
     fun setLocalData(id: String) {
-        viewModelScope.launch {
-            when (val result = localRepository.getMealDetails(id)) {
-                is Result.Success -> handleDetails(result.value.asExternalModel())
-                is Result.Failure -> handleFailure(result.cause)
-            }
-        }
+        requestMealDetails(id)
+    }
+
+    companion object Tags {
+        const val TAG_LOCAL_DATA = "TAG_LOCAL_DATA"
+    }
+}
+
+fun main() {
+    when(Result{null}) {
+        is Result.Success -> println("Success")
+        is Result.Failure -> println("Failure")
     }
 }

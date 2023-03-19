@@ -13,9 +13,9 @@ import dagger.Component
 import dagger.Module
 import dagger.Provides
 import javax.inject.Qualifier
-import javax.inject.Singleton
+import javax.inject.Scope
 
-@[Singleton Component(modules = [AppModule::class])] // AppScope
+@[AppScope Component(modules = [AppModule::class])]
 interface AppComponent : OverviewDeps, DetailsDeps {
 
     override var remoteRepository: RemoteRepository
@@ -40,12 +40,12 @@ interface AppComponent : OverviewDeps, DetailsDeps {
 @Module
 class AppModule {
 
-    @[Provides Singleton]//AppScope]
+    @[Provides AppScope]
     fun provideRemoteRepository(@ApiQualifier apiKey: String) : RemoteRepository {
         return RemoteRepositoryImpl(apiKey)
     }
 
-    @[Provides Singleton]//AppScope]
+    @[Provides AppScope]
     fun provideLocalRepository(context: Context) : LocalRepository {
         return LocalRepositoryImpl(context)
     }
@@ -54,5 +54,5 @@ class AppModule {
 @Qualifier
 annotation class ApiQualifier
 
-//@Scope
-//annotation class AppScope
+@Scope
+annotation class AppScope

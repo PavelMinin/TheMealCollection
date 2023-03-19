@@ -69,26 +69,3 @@ fun ApiService(apiKey: String): ApiService {
     return retrofit.create(ApiService::class.java)
 }
 
-//fun main() {
-//    GlobalScope.launch {
-//        val retrofit = ApiService()
-//        val areas = retrofit.getListOfAllAreas().meals
-//        println(areas)
-//        val categories = retrofit.getListOfAllCategories().categories
-//        println(categories)
-//        val randomMeal = retrofit.getRandomMeal().meals[0]
-//        println(randomMeal)
-//        val mealDetails = retrofit.getMealDetails(randomMeal.id).meals[0]
-//        println(mealDetails)
-//        val ingredients = retrofit.getListOfAllIngredients()
-//        println(ingredients)
-//        val findByName = retrofit.getMealByName("br")
-//        println(findByName)
-//        val findByCategory = retrofit.getMealsByCategory("Seafood")
-//        println(findByCategory)
-//        val findByArea = retrofit.getMealsByArea("Canadian")
-//        println(findByArea)
-//    }
-//    Thread.sleep(500)
-//}
-

@@ -3,7 +3,6 @@ package com.example.dishes_list.overview
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -102,7 +101,7 @@ class OverviewFragment : BaseFragment(R.layout.fragment_overview) {
     }
 
     private fun handleFailure(cause: Throwable) {
-        binding.loadingProgressBar.isInvisible = true
+        binding.loadingProgressBar.isVisible = false
 
         val message = when (cause) {
             is NetworkUnavailable -> getString(R.string.network_unavailable_error_message)

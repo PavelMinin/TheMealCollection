@@ -1,6 +1,7 @@
 package com.example.themealcollection
 
 import android.app.Application
+import com.example.dish_details.di.DetailsDepsStore
 import com.example.dishes_list.overview.di.OverviewDepsStore
 import com.example.themealcollection.LocalValues.API_KEY
 import com.example.themealcollection.di.AppComponent
@@ -19,5 +20,6 @@ class TheMealCollectionApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         OverviewDepsStore.deps = appComponent
+        DetailsDepsStore.deps = appComponent
     }
 }

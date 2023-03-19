@@ -14,7 +14,7 @@ class MealOverviewViewHolder(
 
     fun bind(item: MealOverview) {
         with(binding) {
-            image.load(item.imageUrl) {
+            image.load(item.imageUrl + "/preview") {
                 scale(Scale.FIT)
                 size(ViewSizeResolver(root))
             }
