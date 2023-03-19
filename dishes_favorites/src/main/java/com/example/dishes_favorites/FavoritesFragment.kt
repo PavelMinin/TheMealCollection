@@ -23,6 +23,7 @@ import com.example.dishes_favorites.viewmodel.FavoritesViewModel
 import com.example.dishes_favorites.viewmodel.FavoritesViewModelFactory
 import com.example.navigation.BaseFragment
 import com.google.android.material.snackbar.Snackbar
+import dagger.Lazy
 import javax.inject.Inject
 
 
@@ -33,7 +34,7 @@ class FavoritesFragment : BaseFragment(R.layout.fragment_favorites) {
 
     private val binding by viewBinding(FragmentFavoritesBinding::bind)
     private val viewModel: FavoritesViewModel by viewModels {
-        favoritesViewModelFactory.value
+        favoritesViewModelFactory.get()
     }
 
     override fun onAttach(context: Context) {

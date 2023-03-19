@@ -15,7 +15,7 @@
             app:destination="@id/nav_meal_details">
             <argument
                 android:name="mealId"
-                app:argType="String"
+                app:argType="string"
                 app:nullable="false"/>
         </action>
     </fragment>

@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="The Meal Collection"
+        app:menu="@menu/filter"
         app:titleTextColor="@color/white"
         android:background="@color/brown" />
 

@@ -11,7 +11,7 @@ interface LocalRepository {
 
     suspend fun getMealList(): Result<List<MealOverviewEntity>>
 
-    suspend fun getMealDetails(id: String): Result<MealFavoritesEntity>
+    suspend fun getMealDetails(id: String): Result<MealFavoritesEntity?>
 
     suspend fun getMealFavorites(): Result<List<MealFavoritesEntity>>
 

@@ -12,7 +12,7 @@
         android:label="MealDetailsFragment">
         <argument
             android:name="mealId"
-            app:argType="String"
-            app:nullable="false" />
+            app:argType="string"
+            app:nullable="false"/>
     </fragment>
 </navigation>

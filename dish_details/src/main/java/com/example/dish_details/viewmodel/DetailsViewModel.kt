@@ -24,21 +24,29 @@ class DetailsViewModel(
     private val _viewEffects = MutableSharedFlow<DetailsFragmentViewEffects>()
 
     fun requestMealDetails(id: String) {
-        if (viewState.value.mealDetails != null) return
+        try {
+
+        } catch (e: Throwable) {
+            Log.i(TAG_LOCAL_DATA, "Error: $e")
+        }
 
         viewModelScope.launch {
             when (val result = localRepository.getMealDetails(id)) {
-                is Result.Success -> handleFavoritesDetails(result.value.asExternalModel())
-                is Result.Failure -> viewModelScope.launch { handleFailure(result.cause) }
-            }
-        }
-
-        if (viewState.value.mealDetails != null) return
-
-        viewModelScope.launch {
-            when (val resultRemote = remoteRepository.getMealDetails(id)) {
-                is Result.Success -> handleDetails(resultRemote.value)
-                is Result.Failure -> handleFailure(resultRemote.cause)
+                is Result.Success -> {
+                    Log.i(TAG_LOCAL_DATA, "Received data: ${result.value?.id}")
+                    if (result.value != null) {
+                        handleFavoritesDetails(result.value!!.asExternalModel())
+                    } else {
+                        when (val resultRemote = remoteRepository.getMealDetails(id)) {
+                            is Result.Success -> handleDetails(resultRemote.value)
+                            is Result.Failure -> handleFailure(resultRemote.cause)
+                        }
+                    }
+                }
+                is Result.Failure -> {
+                    handleFailure(result.cause)
+                    Log.i(TAG_LOCAL_DATA, "Failure cause: ${result.cause}")
+                }
             }
         }
     }
@@ -62,11 +70,11 @@ class DetailsViewModel(
     }
 
     fun pressOnFavoritesButton() {
-        if(viewState.value.isFavorites) deleteFromFavorites()
+        if (viewState.value.isFavorites) deleteFromFavorites()
         else addToFavorites()
     }
 
-     private fun addToFavorites() {
+    private fun addToFavorites() {
         try {
             viewModelScope.launch {
                 val details = viewState.value.mealDetails
@@ -82,8 +90,8 @@ class DetailsViewModel(
         try {
             viewModelScope.launch {
                 val details = viewState.value.mealDetails
-                details?.asInternalModel()?.let {
-                        it -> localRepository.deleteMealFromFavorites(it)
+                details?.asInternalModel()?.let { it ->
+                    localRepository.deleteMealFromFavorites(it)
                 }
                 handleDetails(requireNotNull(details))
             }
@@ -103,12 +111,5 @@ class DetailsViewModel(
 
     companion object Tags {
         const val TAG_LOCAL_DATA = "TAG_LOCAL_DATA"
-    }
-}
-
-fun main() {
-    when(Result{null}) {
-        is Result.Success -> println("Success")
-        is Result.Failure -> println("Failure")
     }
 }

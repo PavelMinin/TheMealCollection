@@ -1,8 +1,11 @@
 package com.example.dish_details
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsetsController
+import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -55,6 +58,14 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
         requestMealDetails(args.mealId)
         setOnFavoritesClickListener()
         setOnToolbarBackButtonListener()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            setSystemUiVisibility()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun setSystemUiVisibility() {
+        WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
     }
 
     private fun setOnToolbarBackButtonListener() {
@@ -96,12 +107,10 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
 
     private fun handleFailure(cause: Throwable) {
         binding.loadingProgressBar.isVisible = false
-
         val message = when (cause) {
             is NetworkUnavailable -> getString(R.string.network_unavailable_error_message)
             else -> getString(R.string.generic_error_message)
         }
-
         showSnackbar(message)
         showLocalData()
     }
@@ -118,35 +127,35 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
     private fun updateUi(viewState: DetailsFragmentViewState) {
         viewState.mealDetails?.let { showDetails(it) }
         binding.loadingProgressBar.isVisible = viewState.loading
-        binding.favoritesIcon.isVisible = viewState.loading
-        if(viewState.isFavorites) {
-            binding.favoritesIcon.setImageResource(R.drawable.baseline_favorite_24)
-        } else {
+        binding.favoritesIcon.isVisible = !viewState.loading
+        if(!viewState.isFavorites) {
             binding.favoritesIcon.setImageResource(R.drawable.baseline_favorite_border_24)
+        } else {
+            binding.favoritesIcon.setImageResource(R.drawable.baseline_favorite_24)
         }
     }
 
     private fun showDetails(mealDetails: MealDetails) {
-        val details = requireNotNull(mealDetails) { "Details is null!" }
         with(binding) {
-            toolbarDetail.title = details.name
-            toolbarDetail.subtitle = details.category
-            image.load(details.imageUrl)
+            toolbarDetail.title = mealDetails.name
+            toolbarDetail.subtitle = mealDetails.category
+            image.load(mealDetails.imageUrl)
             favoritesIcon.drawable
-            val mapOfingredientsAndMeasures = makeIngredientAndMeasuresMap(mealDetails)
+            val mapOfIngredientsAndMeasures = makeIngredientAndMeasuresMap(mealDetails)
             var ingredients = ""
             var firstLine = true
-            mapOfingredientsAndMeasures.forEach {
-                if(it.key != null) {
-                    if(firstLine) {
+            mapOfIngredientsAndMeasures.forEach {
+                if (it.key != null) {
+                    if (firstLine) {
                         firstLine = false
-                        ingredients += (it.key + ": ") + (it.value  ?: "\nN/A")
+                        ingredients += (it.key + ": ") + (it.value ?: "\nN/A")
                     }
-                    ingredients += "\n" + (it.key + ": ") + (it.value  ?: "\nN/A")
+                    ingredients += "\n" + (it.key + ": ") + (it.value ?: "\nN/A")
                 }
             }
+
             ingredientsField.text = ingredients
-            instructionsField.text = details.strInstructions
+            instructionsField.text = mealDetails.strInstructions + "\n\n\n"// Костыль по отображению
         }
     }
 

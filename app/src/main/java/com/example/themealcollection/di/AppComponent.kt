@@ -15,9 +15,8 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Qualifier
 import javax.inject.Scope
-import javax.inject.Singleton
 
-@[Singleton Component(modules = [AppModule::class])]
+@[AppScope Component(modules = [AppModule::class])]
 interface AppComponent : OverviewDeps, DetailsDeps, FavoritesDeps {
 
     override var remoteRepository: RemoteRepository

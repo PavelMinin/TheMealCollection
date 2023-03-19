@@ -6,8 +6,6 @@
     app:startDestination="@id/fragment_overview_page"
     tools:ignore="UnusedNavigation">
 
-
-
     <fragment
         android:id="@+id/fragment_overview_page"
         android:label="FragmentOverview"
@@ -18,7 +16,7 @@
             app:destination="@id/nav_meal_details">
             <argument
                 android:name="mealId"
-                app:argType="String"
+                app:argType="string"
                 app:nullable="false"/>
         </action>
     </fragment>
