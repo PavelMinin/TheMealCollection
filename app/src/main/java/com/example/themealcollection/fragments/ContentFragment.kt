@@ -17,7 +17,7 @@ class ContentFragment : TabNavigationFragment(R.layout.fragment_content) {
             Tab(getString(R.string.overview_page),
                 com.example.dishes_list.R.navigation.nav_list_flow),
             Tab(getString(R.string.advanced_search_page),
-                com.example.dishes_list.R.navigation.nav_list_flow),
+                com.example.dishes_favorites.R.navigation.nav_favorites),
             Tab(getString(R.string.favorites_page),
                 com.example.dishes_favorites.R.navigation.nav_favorites)
         )
@@ -42,14 +42,6 @@ class ContentFragment : TabNavigationFragment(R.layout.fragment_content) {
                     if (selectedTab.name != tabs[0].name) selectTab(tabs[0])
                     true
                 }
-//                R.id.fragment_categories_page -> {
-//                    if (selectedTab.name != tabs[1].name) selectTab(tabs[1])
-//                    true
-//                }
-//                R.id.fragment_areas_page -> {
-//                    if (selectedTab.name != tabs[2].name) selectTab(tabs[2])
-//                    true
-//                }
                 R.id.fragment_search_page -> {
                     if (selectedTab.name != tabs[1].name) selectTab(tabs[1])
                     true

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="list_of_meals_description">List of meals.</string>
-    <string name="list_of_favorite_meals_description">List of favirite meals</string>
+    <string name="list_of_favorite_meals_description">List of favorite meals</string>
+    <string name="network_unavailable_error_message">No internet connection! Please try again.</string>
+    <string name="generic_error_message">Something went wrong… Please try again.</string>
 </resources>

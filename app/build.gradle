@@ -53,9 +53,8 @@ dependencies {
     implementation project(path: ':dish_details')
     implementation project(path: ':dishes_favorites')
     implementation project(path: ':navigation')
-//    implementation project(path: ':search')
-//    implementation project(path: ':categories')
-//    implementation project(path: ':areas')
+    implementation project(path: ':search')
+
 
     // Dagger2
     implementation "com.google.dagger:dagger-android:$version_dagger"

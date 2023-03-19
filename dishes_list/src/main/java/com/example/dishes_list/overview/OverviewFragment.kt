@@ -63,10 +63,10 @@ class OverviewFragment : BaseFragment(R.layout.fragment_overview) {
     }
 
     private fun createAdapter(): MealAdapter {
-        return MealAdapter { meal ->
+        return MealAdapter { mealId ->
             findNavController().navigate(
             OverviewFragmentDirections
-                .actionFragmentOverviewPageToNavUserDetails(meal)
+                .actionFragmentOverviewPageToNavUserDetails(mealId)
         ) }
     }
 

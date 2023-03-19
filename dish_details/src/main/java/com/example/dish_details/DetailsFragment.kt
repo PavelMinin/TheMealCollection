@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.example.core.data.NetworkUnavailable
@@ -51,8 +52,15 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
         super.onViewCreated(view, savedInstanceState)
 
         setupUI()
-        requestMealDetails(args.meal.id)
+        requestMealDetails(args.mealId)
         setOnFavoritesClickListener()
+        setOnToolbarBackButtonListener()
+    }
+
+    private fun setOnToolbarBackButtonListener() {
+        binding.toolbarDetail.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun setOnFavoritesClickListener() {
@@ -99,7 +107,7 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
     }
 
     private fun showLocalData() {
-        viewModel.setLocalData(args.meal.id)
+        viewModel.setLocalData(args.mealId)
     }
 
 
@@ -110,6 +118,7 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
     private fun updateUi(viewState: DetailsFragmentViewState) {
         viewState.mealDetails?.let { showDetails(it) }
         binding.loadingProgressBar.isVisible = viewState.loading
+        binding.favoritesIcon.isVisible = viewState.loading
         if(viewState.isFavorites) {
             binding.favoritesIcon.setImageResource(R.drawable.baseline_favorite_24)
         } else {

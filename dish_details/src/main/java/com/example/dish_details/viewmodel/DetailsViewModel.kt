@@ -26,16 +26,14 @@ class DetailsViewModel(
     fun requestMealDetails(id: String) {
         if (viewState.value.mealDetails != null) return
 
-        try {
-            viewModelScope.launch {
-                when (val result = localRepository.getMealDetails(id)) {
-                    is Result.Success -> handleFavoritesDetails(result.value.asExternalModel())
-                    is Result.Failure -> viewModelScope.launch { handleFailure(result.cause) }
-                }
+        viewModelScope.launch {
+            when (val result = localRepository.getMealDetails(id)) {
+                is Result.Success -> handleFavoritesDetails(result.value.asExternalModel())
+                is Result.Failure -> viewModelScope.launch { handleFailure(result.cause) }
             }
-        } catch (e: Throwable) {
-            viewModelScope.launch { handleFailure(e) }
         }
+
+        if (viewState.value.mealDetails != null) return
 
         viewModelScope.launch {
             when (val resultRemote = remoteRepository.getMealDetails(id)) {

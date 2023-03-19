@@ -32,6 +32,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintTop_toBottomOf="@id/toolbar_detail"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -84,7 +85,7 @@
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ingredients_title"
-                tools:text="Ingredient1: measure1\nIngredient2: measure2\nIngredient3: measure3\n..."/>
+                tools:text="Ingredient1: measure1\nIngredient2: measure2\nIngredient3: measure3\n..." />
 
             <TextView
                 android:id="@+id/instructions_title"

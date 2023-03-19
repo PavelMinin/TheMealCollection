@@ -11,8 +11,8 @@
         tools:layout="@layout/fragment_details"
         android:label="MealDetailsFragment">
         <argument
-            android:name="meal"
-            app:argType="com.example.core.data.model.MealOverview"
+            android:name="mealId"
+            app:argType="String"
             app:nullable="false" />
     </fragment>
 </navigation>
