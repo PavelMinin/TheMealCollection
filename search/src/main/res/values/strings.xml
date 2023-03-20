@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_meal_by_name">search meal by name</string>
+    <string name="find_meal_by_name">Find meal by name</string>
+    <string name="start_searching">Start searching</string>
+    <string name="dish_serving_example_description">Dish serving example.</string>
+    <string name="category_description">Category:</string>
+    <string name="area_description">Area:</string>
+</resources>
