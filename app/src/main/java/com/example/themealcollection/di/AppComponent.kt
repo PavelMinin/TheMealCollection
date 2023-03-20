@@ -9,6 +9,7 @@ import com.example.core.data.RemoteRepositoryImpl
 import com.example.dish_details.di.DetailsDeps
 import com.example.dishes_favorites.di.FavoritesDeps
 import com.example.dishes_list.overview.di.OverviewDeps
+import com.example.search.di.SearchDeps
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
@@ -17,7 +18,7 @@ import javax.inject.Qualifier
 import javax.inject.Scope
 
 @[AppScope Component(modules = [AppModule::class])]
-interface AppComponent : OverviewDeps, DetailsDeps, FavoritesDeps {
+interface AppComponent : OverviewDeps, DetailsDeps, FavoritesDeps, SearchDeps {
 
     override var remoteRepository: RemoteRepository
     override var localRepository: LocalRepository

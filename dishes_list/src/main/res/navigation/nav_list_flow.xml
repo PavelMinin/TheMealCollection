@@ -12,7 +12,7 @@
         android:name="com.example.dishes_list.overview.OverviewFragment"
         tools:layout="@layout/fragment_overview">
         <action
-            android:id="@+id/action_fragment_overview_page_to_nav_user_details"
+            android:id="@+id/action_fragment_overview_page_to_nav_meal_details"
             app:destination="@id/nav_meal_details">
             <argument
                 android:name="mealId"

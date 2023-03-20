@@ -17,7 +17,7 @@ class ContentFragment : TabNavigationFragment(R.layout.fragment_content) {
             Tab(getString(R.string.overview_page),
                 com.example.dishes_list.R.navigation.nav_list_flow),
             Tab(getString(R.string.advanced_search_page),
-                com.example.dishes_favorites.R.navigation.nav_favorites),
+                com.example.search.R.navigation.nav_search),
             Tab(getString(R.string.favorites_page),
                 com.example.dishes_favorites.R.navigation.nav_favorites)
         )

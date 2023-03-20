@@ -17,6 +17,8 @@ interface RemoteRepository {
     suspend fun getCategories(): Result<List<Category>>
 
     suspend fun getIngredients(): Result<List<Ingredient>>
+
+    suspend fun findMealByName(name: String): Result<List<MealOverview>>
 }
 
 class RemoteRepositoryImpl @Inject constructor(apiKey: String) : RemoteRepository {
@@ -54,6 +56,12 @@ class RemoteRepositoryImpl @Inject constructor(apiKey: String) : RemoteRepositor
     override suspend fun getIngredients()= withContext(Dispatchers.IO) {
         Result {
             apiService.getListOfAllIngredients().ingredients
+        }
+    }
+
+    override suspend fun findMealByName(name: String)= withContext(Dispatchers.IO) {
+        Result {
+            apiService.getMealByName(name).meals
         }
     }
 }

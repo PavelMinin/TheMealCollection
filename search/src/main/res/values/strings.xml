@@ -6,4 +6,6 @@
     <string name="dish_serving_example_description">Dish serving example.</string>
     <string name="category_description">Category:</string>
     <string name="area_description">Area:</string>
+    <string name="network_unavailable_error_message">No internet connection! Please try again.</string>
+    <string name="generic_error_message">Something went wrong… Please try again.</string>
 </resources>

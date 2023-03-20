@@ -1,4 +1,4 @@
-package com.example.dishes_list.overview
+package com.example.search
 
 import android.content.Context
 import android.os.Bundle
@@ -14,33 +14,30 @@ import com.example.core.data.NetworkUnavailable
 import com.example.core.utils.Utils
 import com.example.core.utils.Utils.addHorizontalSpaceDecoration
 import com.example.core.utils.viewBinding
-import com.example.dishes_list.R
-import com.example.dishes_list.databinding.FragmentOverviewBinding
-import com.example.dishes_list.overview.adapter.MealAdapter
-import com.example.dishes_list.overview.di.OverviewComponentViewModel
-import com.example.dishes_list.overview.viewmodel.OverviewFragmentViewEffects
-import com.example.dishes_list.overview.viewmodel.OverviewFragmentViewState
-import com.example.dishes_list.overview.viewmodel.OverviewViewModel
-import com.example.dishes_list.overview.viewmodel.OverviewViewModelFactory
 import com.example.navigation.BaseFragment
+import com.example.search.adapter.MealAdapter
+import com.example.search.databinding.SearchFragmentBinding
+import com.example.search.di.SearchComponentViewModel
+import com.example.search.viewmodel.SearchFragmentViewEffects
+import com.example.search.viewmodel.SearchFragmentViewState
+import com.example.search.viewmodel.SearchViewModel
+import com.example.search.viewmodel.SearchViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import dagger.Lazy
 import javax.inject.Inject
-
-
-class OverviewFragment : BaseFragment(R.layout.fragment_overview) {
+class FragmentSearch : BaseFragment(R.layout.search_fragment) {
 
     @Inject
-    internal lateinit var overviewViewModelFactory: Lazy<OverviewViewModelFactory>
+    internal lateinit var overviewViewModelFactory: Lazy<SearchViewModelFactory>
 
-    private val binding by viewBinding(FragmentOverviewBinding::bind)
-    private val viewModel: OverviewViewModel by viewModels {
+    private val binding by viewBinding(SearchFragmentBinding::bind)
+    private val viewModel: SearchViewModel by viewModels {
         overviewViewModelFactory.get()
     }
 
     override fun onAttach(context: Context) {
-        ViewModelProvider(this).get<OverviewComponentViewModel>()
-            .newOverviewComponent.inject(this)
+        ViewModelProvider(this).get<SearchComponentViewModel>()
+            .searchComponent.inject(this)
         super.onAttach(context)
     }
 
@@ -48,10 +45,14 @@ class OverviewFragment : BaseFragment(R.layout.fragment_overview) {
         super.onViewCreated(view, savedInstanceState)
 
         setupUI()
-        requestMealList()
+        setOnSearchButtonListener()
+    }
 
-        binding.layoutSwipeRefresh.setOnRefreshListener {
-            viewModel.updateMealList()
+    private fun setOnSearchButtonListener() {
+        with(binding) {
+            arrowSearchImg.setOnClickListener {
+                viewModel.searchRequest(searchLine.text.toString())
+            }
         }
     }
 
@@ -65,8 +66,8 @@ class OverviewFragment : BaseFragment(R.layout.fragment_overview) {
     private fun createAdapter(): MealAdapter {
         return MealAdapter { mealId ->
             findNavController().navigate(
-            OverviewFragmentDirections
-                .actionFragmentOverviewPageToNavMealDetails(mealId)
+            FragmentSearchDirections
+                .actionFragmentSearchPageToNavMealDetails(mealId)
         ) }
     }
 
@@ -85,16 +86,15 @@ class OverviewFragment : BaseFragment(R.layout.fragment_overview) {
         }
     }
 
-    private fun updateUi(viewState: OverviewFragmentViewState, adapter: MealAdapter) {
+    private fun updateUi(viewState: SearchFragmentViewState, adapter: MealAdapter) {
         adapter.submitList(viewState.meals)
         binding.loadingProgressBar.isVisible = viewState.loading
-        binding.layoutSwipeRefresh.isRefreshing = viewState.loading
     }
     private fun subscribeToViewEffects() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.viewEffects.collect {
-                when (it) {
-                    is OverviewFragmentViewEffects.Failure -> handleFailure(it.cause)
+                when(it) {
+                    is SearchFragmentViewEffects.Failure -> handleFailure(it.cause)
                 }
             }
         }
@@ -107,22 +107,12 @@ class OverviewFragment : BaseFragment(R.layout.fragment_overview) {
             is NetworkUnavailable -> getString(R.string.network_unavailable_error_message)
             else -> getString(R.string.generic_error_message)
         }
-
         showSnackbar(message)
-        showLocalData()
-    }
-
-    private fun showLocalData() {
-        viewModel.setLocalData()
     }
 
 
     private fun showSnackbar(message: String) {
         Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
-    }
-
-    private fun requestMealList() {
-        viewModel.requestMealList()
     }
 }
 

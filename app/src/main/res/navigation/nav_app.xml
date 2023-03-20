@@ -4,26 +4,6 @@
     android:id="@+id/nav_app"
     app:startDestination="@id/nav_content">
 
-<!--    <include-->
-<!--        android:id="@+id/nav_splash"/>-->
-<!--&lt;!&ndash;        app:graph="@navigation/nav_splash"/>&ndash;&gt;-->
-
-<!--    <action-->
-<!--        android:id="@+id/action_global_to_onboarding"-->
-<!--        app:destination="@id/nav_onboarding"-->
-<!--        app:popUpTo="@id/nav_app"-->
-<!--        app:popUpToInclusive="true"/>-->
-
-<!--    <include-->
-<!--        android:id="@+id/nav_onboarding"/>-->
-<!--&lt;!&ndash;        app:graph="@navigation/nav_onboarding"/>&ndash;&gt;-->
-
-<!--    <action-->
-<!--        android:id="@+id/action_global_to_home"-->
-<!--        app:destination="@id/nav_content"-->
-<!--        app:popUpTo="@id/nav_app"-->
-<!--        app:popUpToInclusive="true"/>-->
-
     <include app:graph="@navigation/nav_content"/>
 
 </navigation>
