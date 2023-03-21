@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="action_global_to_favorites" type="id"/>
+    <item name="action_global_to_list" type="id"/>
+    <item name="action_global_to_search" type="id"/>
+    <item name="action_global_to_details" type="id"/>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="list_of_favorite_meals_description">List of you favorite meals</string>
+    <string name="favorites_list_is_empty_information">your favorites list is empty…</string>
+    <string name="generic_error_message">Something went wrong… Please try again.</string>
+</resources>

@@ -7,4 +7,18 @@
   <component name="ProjectType">
     <option name="id" value="Android" />
   </component>
+  <component name="SuppressABINotification">
+    <option name="modulesWithSuppressedNotConfigured">
+      <set>
+        <option value="The_Meal_Collection.app" />
+      </set>
+    </option>
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.077474365234375" />
+      </ProjectState>
+    </option>
+  </component>
 </project>

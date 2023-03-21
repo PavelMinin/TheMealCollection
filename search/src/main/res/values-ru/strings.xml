@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_meal_by_name">Поиск блюда по названию</string>
+    <string name="find_meal_by_name">Найти блюдо по названию</string>
+    <string name="start_searching">Начать поиск</string>
+    <string name="dish_serving_example_description">Вариант сервировки блюда.</string>
+    <string name="category_description">Категория:</string>
+    <string name="area_description">Страна:</string>
+    <string name="network_unavailable_error_message">Отсутствует интернет соединение! Пожалуйста, попробуйте снова.</string>
+    <string name="generic_error_message">Что-то пошло не так… Пожалуйста, попробуйте снова.</string>
+</resources>
