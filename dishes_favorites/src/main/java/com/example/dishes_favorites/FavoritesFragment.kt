@@ -10,7 +10,6 @@ import androidx.lifecycle.get
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.core.data.NetworkUnavailable
 import com.example.core.utils.Utils
 import com.example.core.utils.Utils.addHorizontalSpaceDecoration
 import com.example.core.utils.viewBinding
@@ -83,6 +82,7 @@ class FavoritesFragment : BaseFragment(R.layout.fragment_favorites) {
     }
 
     private fun updateUi(viewState: FavoritesFragmentViewState, adapter: MealAdapter) {
+        binding.emptyListOfFavorites.isVisible = viewState.meals.isEmpty()
         adapter.submitList(viewState.meals)
         binding.loadingProgressBar.isVisible = viewState.loading
     }
@@ -100,10 +100,7 @@ class FavoritesFragment : BaseFragment(R.layout.fragment_favorites) {
     private fun handleFailure(cause: Throwable) {
         binding.loadingProgressBar.isVisible = false
 
-        val message = when (cause) {
-            is NetworkUnavailable -> getString(R.string.network_unavailable_error_message)
-            else -> getString(R.string.generic_error_message)
-        }
+        val message = getString(R.string.generic_error_message) + "\n" + cause
         showSnackbar(message)
     }
 

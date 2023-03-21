@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="list_of_favorite_meals_description">Список избранных блюд</string>
+    <string name="favorites_list_is_empty_information">ваш список избранного пустой…</string>
+    <string name="generic_error_message">Что-то пошло не так… Пожалуйста, попробуйте снова.</string>
+</resources>

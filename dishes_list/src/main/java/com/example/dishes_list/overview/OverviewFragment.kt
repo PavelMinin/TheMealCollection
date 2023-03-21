@@ -48,7 +48,7 @@ class OverviewFragment : BaseFragment(R.layout.fragment_overview) {
         super.onViewCreated(view, savedInstanceState)
 
         setupUI()
-        requestMealList()
+        requestMealListFromDb()
 
         binding.layoutSwipeRefresh.setOnRefreshListener {
             viewModel.updateMealList()
@@ -86,7 +86,8 @@ class OverviewFragment : BaseFragment(R.layout.fragment_overview) {
     }
 
     private fun updateUi(viewState: OverviewFragmentViewState, adapter: MealAdapter) {
-        adapter.submitList(viewState.meals)
+        val _meals = viewState.meals.reversed()
+        adapter.submitList(_meals)
         binding.loadingProgressBar.isVisible = viewState.loading
         binding.layoutSwipeRefresh.isRefreshing = viewState.loading
     }
@@ -107,7 +108,6 @@ class OverviewFragment : BaseFragment(R.layout.fragment_overview) {
             is NetworkUnavailable -> getString(R.string.network_unavailable_error_message)
             else -> getString(R.string.generic_error_message)
         }
-
         showSnackbar(message)
         showLocalData()
     }
@@ -121,8 +121,8 @@ class OverviewFragment : BaseFragment(R.layout.fragment_overview) {
         Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
     }
 
-    private fun requestMealList() {
-        viewModel.requestMealList()
+    private fun requestMealListFromDb() {
+        viewModel.requestMealListFromDb()
     }
 }
 

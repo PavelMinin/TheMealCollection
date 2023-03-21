@@ -10,6 +10,8 @@ import com.example.core.data.model.asInternalModel
 import com.example.core.db.model.asExternalModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 class OverviewViewModel(
     private val remoteRepository: RemoteRepository,
@@ -18,24 +20,43 @@ class OverviewViewModel(
 
     val viewState: StateFlow<OverviewFragmentViewState> get() = _viewState.asStateFlow()
     val viewEffects: SharedFlow<OverviewFragmentViewEffects> get() = _viewEffects.asSharedFlow()
+    private val mutex = Mutex()
 
     private val _viewState = MutableStateFlow(OverviewFragmentViewState())
     private val _viewEffects = MutableSharedFlow<OverviewFragmentViewEffects>()
 
-    fun requestMealList() {
-        if (viewState.value.meals.isNotEmpty()) return
-
+    private fun requestMealListFromServer() {
         viewModelScope.launch {
-            when (val result = remoteRepository.getRandomMealList()) {
-                is Result.Success -> handleOverview(result.value)
+            mutex.withLock {
+                when (val result = remoteRepository.getRandomMealList()) {
+                    is Result.Success -> handleServer(result.value)
+                    is Result.Failure -> handleFailure(result.cause)
+                }
+                requestMealListFromDb()
+            }
+
+        }
+    }
+
+    fun requestMealListFromDb() {
+        viewModelScope.launch {
+            when (val result = localRepository.getMealList()) {
+                is Result.Success -> handleLocal(result.value.map { it.asExternalModel() })
                 is Result.Failure -> handleFailure(result.cause)
             }
         }
     }
 
-    private fun handleOverview(meals: List<MealOverview>) {
-        _viewState.value = OverviewFragmentViewState(loading = false, meals = meals)
+    private fun handleServer(meals: List<MealOverview>) {
         saveToLocalRepository(meals)
+    }
+
+    private fun handleLocal(meals: List<MealOverview>) {
+        if(meals.isEmpty()) {
+            requestMealListFromServer()
+            return
+        }
+        _viewState.value = OverviewFragmentViewState(loading = false, meals = meals)
     }
 
     private fun saveToLocalRepository(meals: List<MealOverview>) {
@@ -49,21 +70,11 @@ class OverviewViewModel(
     }
 
     fun updateMealList() {
-        _viewState.value = OverviewFragmentViewState(loading = true, meals = emptyList())
-        requestMealList()
+        requestMealListFromServer()
+        _viewState.value = OverviewFragmentViewState(loading = true, meals = viewState.value.meals)
     }
 
     fun setLocalData() {
-        try {
-            viewModelScope.launch {
-                when (val result = localRepository.getMealList()) {
-                    is Result.Success -> handleOverview(result.value.map { it.asExternalModel() })
-                    is Result.Failure -> handleFailure(result.cause)
-                }
-            }
-        } catch (e: Throwable) {
-            viewModelScope.launch { handleFailure(e) }
-        }
-
+       requestMealListFromDb()
     }
 }

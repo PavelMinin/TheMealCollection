@@ -20,8 +20,6 @@ class FavoritesViewModel(
     private val _viewEffects = MutableSharedFlow<FavoritesFragmentViewEffects>()
 
     fun requestFavoritesList() {
-//        if (viewState.value.meals.isNotEmpty()) return
-
         viewModelScope.launch {
             when (val result = localRepository.getMealFavorites()) {
                 is Result.Success -> handleFavorites(result.value.map { it.asExternalModel() })

@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">The Meal Collection</string>
+    <string name="dish_serving_example_description">Вариант сервировки блюда</string>
+    <string name="category_description">Категория:</string>
+    <string name="area_description">Страна:</string>
+    <string name="list_of_my_favorite_meals_description">Лист избранных блюд</string>
+    <string name="overview_page">Обзор</string>
+    <string name="favorites_page">Избранное</string>
+    <string name="categories_page">Категории</string>
+    <string name="areas_page">Страны</string>
+    <string name="advanced_search_page">Поиск</string>
+    <string name="network_unavailable_error_message">Отсутствует интернет соединение! Пожалуйста, попробуйте снова.</string>
+    <string name="generic_error_message">Что-то пошло не так… Пожалуйста, попробуйте снова.</string>
+    <string name="instructions_title">Инструкции:</string>
+    <string name="ingredients_title">Ингредиенты:</string>
+</resources>
