@@ -28,7 +28,11 @@ class SearchViewModel(
     }
 
     private fun handleSearch(meals: List<MealOverview>) {
-        _viewState.value = SearchFragmentViewState(loading = false, meals = meals)
+        if(meals == null) {
+            _viewState.value = SearchFragmentViewState(loading = false, meals = emptyList())
+        } else {
+            _viewState.value = SearchFragmentViewState(loading = false, meals = meals)
+        }
     }
 
 

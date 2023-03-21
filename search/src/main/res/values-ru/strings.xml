@@ -8,4 +8,5 @@
     <string name="area_description">Страна:</string>
     <string name="network_unavailable_error_message">Отсутствует интернет соединение! Пожалуйста, попробуйте снова.</string>
     <string name="generic_error_message">Что-то пошло не так… Пожалуйста, попробуйте снова.</string>
+    <string name="no_results_found">Ничего не найдено…</string>
 </resources>
