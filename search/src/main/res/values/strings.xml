@@ -8,4 +8,5 @@
     <string name="area_description">Area:</string>
     <string name="network_unavailable_error_message">No internet connection! Please try again.</string>
     <string name="generic_error_message">Something went wrong… Please try again.</string>
+    <string name="no_results_found">No results found…</string>
 </resources>

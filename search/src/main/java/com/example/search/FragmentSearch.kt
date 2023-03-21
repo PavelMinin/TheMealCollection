@@ -88,6 +88,7 @@ class FragmentSearch : BaseFragment(R.layout.search_fragment) {
 
     private fun updateUi(viewState: SearchFragmentViewState, adapter: MealAdapter) {
         adapter.submitList(viewState.meals)
+        binding.emptyListOfFound.isVisible = viewState.meals.isEmpty()
         binding.loadingProgressBar.isVisible = viewState.loading
     }
     private fun subscribeToViewEffects() {
